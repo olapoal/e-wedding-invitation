@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Undangan Pernikahan Digital</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Elegant Wedding Invitation Phone Icon.png">
+    <!-- Themes CSS -->
+    <link rel="stylesheet" href="assets/css/invitation-themes.css">
+    <style>
+        /* Smooth scrolling & clean mobile scrollbars */
+        html, body {
+            scroll-behavior: smooth;
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+        }
+        ::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+        /* Loading skeleton */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="invitation-root theme-emerald">
+
+    <!-- Loading Screen -->
+    <div id="invitationLoader" class="loading-screen">
+        <div class="spinner"></div>
+        <p style="font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Memuat Undangan...</p>
+    </div>
+
+    <!-- COVER / OPENING OVERLAY -->
+    <div id="invitationCover" class="invitation-cover-overlay">
+        <div class="cover-card">
+            <div class="cover-photo-frame">
+                <img data-inv="groom-photo" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600" alt="Cover Couple">
+            </div>
+            <div class="cover-pretitle" data-inv="cover-title">The Wedding Of</div>
+            <h1 class="cover-couplename" data-inv="cover-couplename">Rizky & Amanda</h1>
+            <p style="font-size: 0.85rem; color: var(--theme-text-muted);" data-inv="cover-date">Sabtu, 24 Oktober 2026</p>
+
+            <div class="cover-guest-box">
+                <div class="cover-guest-to">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+                <div class="cover-guest-name" data-inv="guest-name">Tamu Undangan</div>
+            </div>
+
+            <button type="button" id="btnOpenInvitation" class="btn-open-invitation">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span data-inv="cover-open-btn">Buka Undangan</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- FLOATING MUSIC PLAYER BUTTON -->
+    <button type="button" id="floatingMusicBtn" class="floating-music-btn" title="Putar / Jeda Musik">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+    </button>
+
+    <!-- INVITATION MAIN CONTENT -->
+    <main class="invitation-main">
+
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-subtitle">The Wedding Celebration</div>
+            <h1 class="hero-couple-title" data-inv="hero-couplename">Rizky & Amanda</h1>
+            <div class="hero-date-badge" data-inv="hero-date">Sabtu, 24 Oktober 2026</div>
+        </section>
+
+        <!-- QUOTE / AYAT SUCI -->
+        <section class="section-wrapper">
+            <div class="quote-card">
+                <p data-inv="quote-text">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri..."</p>
+                <span class="quote-source" data-inv="quote-source">QS. Ar-Rum: 21</span>
+            </div>
+        </section>
+
+        <!-- PASANGAN MEMPELAI (BRIDE & GROOM) -->
+        <section class="section-wrapper">
+            <div class="section-tag">Mempelai</div>
+            <h2 class="section-title">Groom & Bride</h2>
+            <p class="section-subtitle">Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami bermaksud melangsungkan pernikahan:</p>
+
+            <!-- GROOM -->
+            <div class="couple-card">
+                <div class="couple-photo-wrapper">
+                    <img data-inv="groom-photo" src="" alt="Mempelai Pria">
+                </div>
+                <h3 class="couple-name" data-inv="groom-nickname">Rizky</h3>
+                <div class="couple-fullname" data-inv="groom-fullname">Rizky Pratama, S.T.</div>
+                <p class="couple-parents" data-inv="groom-parents">Putra pertama dari Bpk. Hendra & Ibu Ratna</p>
+                <a href="#" target="_blank" class="couple-social-link" data-inv="groom-ig">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <span>@instagram</span>
+                </a>
+            </div>
+
+            <div class="couple-ampersand">&</div>
+
+            <!-- BRIDE -->
+            <div class="couple-card">
+                <div class="couple-photo-wrapper">
+                    <img data-inv="bride-photo" src="" alt="Mempelai Wanita">
+                </div>
+                <h3 class="couple-name" data-inv="bride-nickname">Amanda</h3>
+                <div class="couple-fullname" data-inv="bride-fullname">Amanda Putri, S.Farm.</div>
+                <p class="couple-parents" data-inv="bride-parents">Putri kedua dari Bpk. Bambang & Ibu Siti</p>
+                <a href="#" target="_blank" class="couple-social-link" data-inv="bride-ig">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <span>@instagram</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- HITUNG MUNDUR (COUNTDOWN) -->
+        <section class="section-wrapper">
+            <div class="section-tag">Menuju Hari Bahagia</div>
+            <h2 class="section-title">Save The Date</h2>
+
+            <div class="countdown-grid">
+                <div class="countdown-box">
+                    <div class="countdown-num" id="countDays">00</div>
+                    <div class="countdown-label">Hari</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="countHours">00</div>
+                    <div class="countdown-label">Jam</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="countMinutes">00</div>
+                    <div class="countdown-label">Menit</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="countSeconds">00</div>
+                    <div class="countdown-label">Detik</div>
+                </div>
+            </div>
+
+            <a href="#" id="btnAddCalendar" class="btn-add-calendar" target="_blank">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>Simpan ke Google Calendar</span>
+            </a>
+        </section>
+
+        <!-- RANGKAIAN ACARA (EVENTS) -->
+        <section class="section-wrapper">
+            <div class="section-tag">Waktu & Tempat</div>
+            <h2 class="section-title">Agenda Acara</h2>
+
+            <!-- AKAD NIKAH -->
+            <div class="event-card">
+                <div class="event-icon-circle">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21l-8-4V7l8 4 8-4v10l-8 4z M12 11V3"/></svg>
+                </div>
+                <h3 class="event-title" data-inv="akad-title">Akad Nikah</h3>
+                <div class="event-datetime" data-inv="akad-date">Sabtu, 24 Oktober 2026</div>
+                <div class="event-time" data-inv="akad-time">08:00 - 10:00 WIB</div>
+                <div class="event-venue" data-inv="akad-venue">Masjid Agung Ballroom</div>
+                <p class="event-address" data-inv="akad-address">Jl. Sudirman No. 128, Menteng, Jakarta Pusat</p>
+                <!-- Google Maps Interactive Embed -->
+                <div class="map-embed-wrapper" id="akadMapWrapper" style="display: none;">
+                    <iframe id="akadMapIframe" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <div class="event-actions">
+                    <a href="#" target="_blank" class="btn-map-action" data-inv="akad-map-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span>Buka Google Maps</span>
+                    </a>
+                    <a href="#" target="_blank" class="btn-map-action btn-waze-action" data-inv="akad-waze-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.95 9.07c0 .32.02.63.06.94l.02.13a10 10 0 007.87 8.65V22a1 1 0 001.6.8l2.67-2A9.97 9.97 0 0012 22a10 10 0 0010-10A10 10 0 0012 2zm-3.5 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm7 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+                        <span>Buka Waze</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RESEPSI -->
+            <div class="event-card">
+                <div class="event-icon-circle">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
+                </div>
+                <h3 class="event-title" data-inv="resepsi-title">Resepsi Pernikahan</h3>
+                <div class="event-datetime" data-inv="resepsi-date">Sabtu, 24 Oktober 2026</div>
+                <div class="event-time" data-inv="resepsi-time">11:00 - 14:00 WIB</div>
+                <div class="event-venue" data-inv="resepsi-venue">The Ritz Emerald Grand Ballroom</div>
+                <p class="event-address" data-inv="resepsi-address">Jl. Mega Kuningan Barat No. 1, Kuningan, Jakarta Selatan</p>
+                <!-- Google Maps Interactive Embed -->
+                <div class="map-embed-wrapper" id="resepsiMapWrapper" style="display: none;">
+                    <iframe id="resepsiMapIframe" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <div class="event-actions">
+                    <a href="#" target="_blank" class="btn-map-action" data-inv="resepsi-map-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span>Buka Google Maps</span>
+                    </a>
+                    <a href="#" target="_blank" class="btn-map-action btn-waze-action" data-inv="resepsi-waze-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.95 9.07c0 .32.02.63.06.94l.02.13a10 10 0 007.87 8.65V22a1 1 0 001.6.8l2.67-2A9.97 9.97 0 0012 22a10 10 0 0010-10A10 10 0 0012 2zm-3.5 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm7 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+                        <span>Buka Waze</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- KISAH CINTA (LOVE STORY) -->
+        <section class="section-wrapper">
+            <div class="section-tag">Perjalanan Kami</div>
+            <h2 class="section-title">Our Love Story</h2>
+            <div class="story-timeline" id="invitationStoryContainer">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </section>
+
+        <!-- GALERI FOTO & VIDEO -->
+        <section class="section-wrapper">
+            <div class="section-tag">Momen Bahagia</div>
+            <h2 class="section-title">Our Moments</h2>
+
+            <div class="gallery-grid" id="invitationGalleryGrid">
+                <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- YouTube Video Trailer -->
+            <div class="video-player-container" id="invitationVideoContainer" style="display: none;">
+                <iframe id="invitationVideoIframe" src="" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- AMPLOP DIGITAL & HADIAH (GIFT REGISTRY) -->
+        <section class="section-wrapper">
+            <div class="section-tag">Tanda Kasih</div>
+            <h2 class="section-title">Wedding Gift</h2>
+            <p class="section-subtitle">Doa restu Anda merupakan karunia terindah bagi kami. Namun jika Anda bermaksud memberikan tanda kasih berupa kado atau angpao digital, dapat melalui rekening berikut:</p>
+
+            <div id="invitationGiftsContainer">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </section>
+
+        <!-- RSVP & BUKU TAMU DOA -->
+        <section class="section-wrapper">
+            <div class="section-tag">Konfirmasi Kehadiran</div>
+            <h2 class="section-title">RSVP & Ucapan</h2>
+            <p class="section-subtitle">Kehadiran dan doa restu Bapak/Ibu/Saudara/i sangat berarti bagi kebahagiaan kami berdua.</p>
+
+            <div class="rsvp-form-card">
+                <form id="invitationRsvpForm">
+                    <div class="form-group-invitation">
+                        <label for="rsvpGuestName">Nama Anda</label>
+                        <input type="text" id="rsvpGuestName" class="form-input-invitation" placeholder="Nama lengkap Anda" required>
+                    </div>
+
+                    <div class="form-group-invitation">
+                        <label for="rsvpAttendance">Konfirmasi Kehadiran</label>
+                        <select id="rsvpAttendance" class="form-select-invitation">
+                            <option value="Hadir">Ya, Saya Akan Hadir</option>
+                            <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
+                            <option value="Masih Ragu">Belum Pasti (Akan Mengabari)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-invitation">
+                        <label for="rsvpGuestsCount">Jumlah Tamu</label>
+                        <select id="rsvpGuestsCount" class="form-select-invitation">
+                            <option value="1">1 Orang</option>
+                            <option value="2">2 Orang</option>
+                            <option value="3">3 Orang</option>
+                            <option value="4">4 Orang atau lebih</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-invitation">
+                        <label for="rsvpMessage">Doa & Ucapan Selamat</label>
+                        <textarea id="rsvpMessage" class="form-textarea-invitation" rows="3" placeholder="Tuliskan ucapan dan doa tulus untuk mempelai..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit-rsvp">Kirim Konfirmasi & Ucapan</button>
+                </form>
+            </div>
+
+            <!-- DINDING UCAPAN (WISHES WALL) -->
+            <div class="wishes-wall" id="invitationWishesWall">
+                <!-- Sample initial wishes -->
+                <div class="wish-item">
+                    <div class="wish-author">
+                        <span>Keluarga Besar Bpk. Handoko</span>
+                        <span class="wish-attendance-badge">Hadir</span>
+                    </div>
+                    <div class="wish-date">2 jam yang lalu</div>
+                    <div class="wish-text">Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah, dan langgeng hingga kakek nenek. Amin.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="invitation-footer">
+            <p style="font-size: 0.85rem; color: var(--theme-text-muted); margin-bottom: 6px;">Kami yang berbahagia,</p>
+            <div class="footer-couplename" data-inv="footer-couplename">Rizky & Amanda</div>
+            <p class="footer-copy">Dibuat dengan penuh cinta &bull; Electronic Wedding Invitation</p>
+        </footer>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="assets/js/presets.js"></script>
+    <script src="assets/js/invitation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = document.getElementById('invitationLoader');
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug') || urlParams.get('id') || '';
+
+            let invitationData = null;
+
+            // 1. Jika ada slug di URL, coba ambil dari Serverless API
+            if (slug) {
+                try {
+                    const res = await fetch(`/api/get-invitation?slug=${encodeURIComponent(slug)}`);
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json.success && json.data) {
+                            invitationData = json.data;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not fetch remote slug data, fallback to preset/local:", e);
+                }
+            }
+
+            // 2. Jika ada data di window (misal dari export mandiri)
+            if (!invitationData && window.EXPORTED_INVITATION_DATA) {
+                invitationData = window.EXPORTED_INVITATION_DATA;
+            }
+
+            // 3. Jika di iframe preview (live edit), tangkap postMessage dari parent
+            window.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'SYNC_INVITATION_DATA') {
+                    if (window.invitationEngine) {
+                        window.invitationEngine.data = event.data.payload;
+                        window.invitationEngine.renderAll();
+                        window.invitationEngine.setupCountdown();
+                    }
+                }
+            });
+
+            // 4. Fallback ke preset default jika belum ada data
+            if (!invitationData) {
+                invitationData = WEDDING_PRESETS["theme-emerald"];
+            }
+
+            // Inisialisasi engine
+            window.initWeddingInvitation(invitationData, { slug });
+
+            // Hilangkan loader
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

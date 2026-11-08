@@ -1,0 +1,61 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["netlify/functions/**"]
+
+# API Redirects for cleaner endpoints
+[[redirects]]
+  from = "/api/verify-email"
+  to = "/.netlify/functions/verify-email"
+  status = 200
+
+[[redirects]]
+  from = "/api/lynk-webhook"
+  to = "/.netlify/functions/lynk-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/trakteer-webhook"
+  to = "/.netlify/functions/trakteer-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/verify-trakteer"
+  to = "/.netlify/functions/verify-trakteer"
+  status = 200
+
+[[redirects]]
+  from = "/api/publish-invitation"
+  to = "/.netlify/functions/publish-invitation"
+  status = 200
+
+[[redirects]]
+  from = "/api/get-invitation"
+  to = "/.netlify/functions/get-invitation"
+  status = 200
+
+[[redirects]]
+  from = "/api/submit-rsvp"
+  to = "/.netlify/functions/submit-rsvp"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin-manage"
+  to = "/.netlify/functions/admin-manage"
+  status = 200
+
+# Pretty URL for published invitations: /invitation/:slug -> /invitation.html?slug=:slug
+[[redirects]]
+  from = "/i/:slug"
+  to = "/invitation.html?slug=:slug"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Access-Control-Allow-Origin = "*"

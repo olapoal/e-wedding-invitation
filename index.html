@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Wedding Invitation Studio &bull; Generator Undangan Digital Tercanggih</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Elegant Wedding Invitation Phone Icon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Studio Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <header class="top-navbar">
+        <div class="brand-section">
+            <img src="Elegant Wedding Invitation Phone Icon.png" alt="Logo" class="brand-logo">
+            <div class="brand-title-group">
+                <h1>E-Wedding Invitation Studio</h1>
+                <p>Generator Undangan Pernikahan Digital Tercanggih</p>
+            </div>
+        </div>
+
+        <div class="navbar-actions">
+            <!-- Demo Countdown Timer Pill (Aktif saat mode demo 2 menit) -->
+            <div id="demoCountdownPill" class="demo-countdown-pill" style="display: none;" title="Sisa Waktu Uji Coba Demo Gratis">
+                <span class="demo-timer-icon">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </span>
+                <span style="font-weight: 600; font-size: 0.78rem;">Demo:</span>
+                <strong id="demoCountdownTime" style="font-family: monospace; font-size: 0.88rem; letter-spacing: 0.5px;">02:00</strong>
+            </div>
+
+            <!-- License Pill -->
+            <div id="userLicenseBadge" class="license-pill" style="display: none;">
+                <span class="license-dot"></span>
+                <span id="userLicenseEmailText">Lisensi Aktif</span>
+            </div>
+
+            <!-- Token Counter & Top-Up Button -->
+            <div id="tokenPillBtn" class="token-pill" title="Klik untuk Top Up Token Publikasi">
+                <span class="token-coin-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/>
+                        <circle cx="12" cy="12" r="7" stroke="#FDE68A" stroke-width="1" stroke-dasharray="2 2"/>
+                        <text x="12" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#78350F" text-anchor="middle">T</text>
+                    </svg>
+                </span>
+                <span id="tokenCountText">0 Token</span>
+                <span class="token-plus-btn">+</span>
+            </div>
+
+            <!-- Save Draft -->
+            <button type="button" id="btnSaveDraft" class="btn-navbar" title="Simpan data draft di browser">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                <span>Simpan Draft</span>
+            </button>
+
+            <!-- Export HTML Mandiri -->
+            <button type="button" id="btnExportHtml" class="btn-navbar" title="Download file HTML mandiri untuk hosting sendiri">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span>Export HTML</span>
+            </button>
+
+            <!-- Publish Trigger Button -->
+            <button type="button" id="btnTriggerPublish" class="btn-navbar btn-publish">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span>Publish Undangan (1 Token)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP SPLIT WORKSPACE -->
+    <div class="app-container">
+
+        <!-- LEFT WORKSPACE: FORM EDITOR -->
+        <aside class="editor-pane">
+            <!-- Category Tabs (Grid 4x2 Rapi, Zero Overflow, No Scrollbar) -->
+            <nav class="editor-tabs-nav">
+                <button type="button" class="tab-btn active" data-tab="themes" title="Desain & Tema Undangan">🎨 Tema</button>
+                <button type="button" class="tab-btn" data-tab="cover" title="Sampul & Kutipan">💌 Sampul</button>
+                <button type="button" class="tab-btn" data-tab="couple" title="Profil Mempelai Pria & Wanita">👫 Mempelai</button>
+                <button type="button" class="tab-btn" data-tab="events" title="Rangkaian Acara & Lokasi">📅 Acara</button>
+                <button type="button" class="tab-btn" data-tab="story" title="Kisah Cinta & Timeline">📖 Kisah</button>
+                <button type="button" class="tab-btn" data-tab="gallery" title="Galeri Foto & Video">📸 Galeri</button>
+                <button type="button" class="tab-btn" data-tab="gifts" title="Amplop Digital & Kado">💳 Rekening</button>
+                <button type="button" class="tab-btn" data-tab="guestlinks" title="Generator Link & Kirim WhatsApp Otomatis">💬 Kirim WA</button>
+            </nav>
+
+            <!-- Scrollable Form Container -->
+            <div class="editor-content-scroll" id="editorScrollArea">
+
+                <!-- TAB 1: TEMA & DESAIN -->
+                <div class="tab-section-content active" id="tab-themes">
+                    <div class="section-header-box">
+                        <h2>Pilih Tema & Gaya Visual</h2>
+                        <p>Pilih dari 7 tema visual pernikahan mewah yang siap digunakan.</p>
+                    </div>
+
+                    <div class="themes-grid" id="themeCardsContainer">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <button type="button" class="btn-navbar" style="width: 100%; justify-content: center;" onclick="window.app.loadPresetData(window.app.currentData.themeId)">
+                            ✨ Muat Teks Contoh Lengkap Tema Ini
+                        </button>
+                        <p class="form-hint" style="text-align: center; margin-top: 6px;">Mengisi otomatis nama, kutipan, dan rundown acara yang serasi dengan tema.</p>
+                    </div>
+
+                    <div class="section-header-box" style="margin-top: 30px;">
+                        <h2>Musik Latar (Background Song)</h2>
+                        <p>Musik otomatis berputar romantis saat tamu menekan 'Buka Undangan'.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Pilih Musik Bawaan Bebas Royalti</label>
+                        <select class="form-control" onchange="document.getElementById('inputMusicUrl').value = this.value; window.app.updateStateFromForm();">
+                            <option value="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=romantic-wedding-piano-10875.mp3">Canon in D - Romantic Piano & Violin</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=warm-acoustic-wedding-112191.mp3">Warm Acoustic Wedding Guitar</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2021/11/25/audio_946b2b5420.mp3?filename=inspiring-emotional-cinematic-piano-11262.mp3">Emotional Cinematic Strings</option>
+                            <option value="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f77270.mp3?filename=gentle-piano-love-story-122941.mp3">Peaceful Sweet Piano Romance</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Atau Masukkan Custom MP3 URL</label>
+                        <input type="url" id="inputMusicUrl" class="form-control" placeholder="https://domain.com/lagu-nikah.mp3">
+                        <p class="form-hint">Dapat menggunakan link file direct audio MP3 (.mp3).</p>
+                    </div>
+                </div>
+
+                <!-- TAB 2: SAMPUL & KUTIPAN -->
+                <div class="tab-section-content" id="tab-cover">
+                    <div class="section-header-box">
+                        <h2>Sampul Depan (Cover Digital)</h2>
+                        <p>Tampilan amplop digital yang pertama kali dilihat oleh tamu.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Judul Sampul</label>
+                        <input type="text" id="inputCoverTitle" class="form-control" placeholder="The Wedding Of / Walimatul 'Ursy">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Teks Tanggal Sampul</label>
+                            <input type="text" id="inputCoverDate" class="form-control" placeholder="Sabtu, 24 Oktober 2026">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teks Tombol Buka</label>
+                            <input type="text" id="inputCoverOpenBtn" class="form-control" placeholder="Buka Undangan">
+                        </div>
+                    </div>
+
+                    <div class="section-header-box" style="margin-top: 30px;">
+                        <h2>Kutipan Romantis / Ayat Suci</h2>
+                        <p>Tampilkan ayat suci (QS. Ar-Rum 21, Alkitab, atau kutipan cinta favorit).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Teks Kutipan / Ayat</label>
+                        <textarea id="inputQuoteText" class="form-control" rows="4" placeholder="Tuliskan ayat atau kata mutiara pernikahan..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sumber Kutipan / Surah</label>
+                        <input type="text" id="inputQuoteSource" class="form-control" placeholder="Contoh: QS. Ar-Rum: 21 atau 1 Korintus 13:4-7">
+                    </div>
+                </div>
+
+                <!-- TAB 3: PROFIL MEMPELAI -->
+                <div class="tab-section-content" id="tab-couple">
+                    <!-- MEMPELAI PRIA -->
+                    <div class="section-header-box">
+                        <h2>Mempelai Pria (Groom)</h2>
+                        <p>Informasi profil lengkap calon mempelai pria.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nama Panggilan</label>
+                            <input type="text" id="inputGroomNickname" class="form-control" placeholder="Rizky">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nama Lengkap & Gelar</label>
+                            <input type="text" id="inputGroomFullName" class="form-control" placeholder="Rizky Pratama, S.T.">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nama Orang Tua & Urutan Anak</label>
+                        <input type="text" id="inputGroomParents" class="form-control" placeholder="Putra pertama dari Bpk. Hendra & Ibu Ratna">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Akun Instagram</label>
+                            <input type="text" id="inputGroomIg" class="form-control" placeholder="rizky.pratama">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">URL Foto Pria</label>
+                            <input type="url" id="inputGroomPhoto" class="form-control" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- MEMPELAI WANITA -->
+                    <div class="section-header-box" style="margin-top: 36px;">
+                        <h2>Mempelai Wanita (Bride)</h2>
+                        <p>Informasi profil lengkap calon mempelai wanita.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nama Panggilan</label>
+                            <input type="text" id="inputBrideNickname" class="form-control" placeholder="Amanda">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nama Lengkap & Gelar</label>
+                            <input type="text" id="inputBrideFullName" class="form-control" placeholder="Amanda Putri Lestari, S.Farm.">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nama Orang Tua & Urutan Anak</label>
+                        <input type="text" id="inputBrideParents" class="form-control" placeholder="Putri kedua dari Bpk. Bambang & Ibu Siti">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Akun Instagram</label>
+                            <input type="text" id="inputBrideIg" class="form-control" placeholder="amanda.putri">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">URL Foto Wanita</label>
+                            <input type="url" id="inputBridePhoto" class="form-control" placeholder="https://...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: ACARA & LOKASI -->
+                <div class="tab-section-content" id="tab-events">
+                    <div class="section-header-box">
+                        <h2>Waktu Hitung Mundur</h2>
+                        <p>Tentukan target waktu untuk live countdown timer.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tanggal & Jam Target Acara</label>
+                        <input type="datetime-local" id="inputCountdownDate" class="form-control">
+                    </div>
+
+                    <!-- AKAD NIKAH / PEMBERKATAN -->
+                    <div class="section-header-box" style="margin-top: 28px;">
+                        <h2>Acara 1: Akad Nikah / Pemberkatan</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Judul Acara 1</label>
+                        <input type="text" id="inputAkadTitle" class="form-control" placeholder="Akad Nikah / Pemberkatan Kudus">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Hari & Tanggal</label>
+                            <input type="text" id="inputAkadDate" class="form-control" placeholder="Sabtu, 24 Oktober 2026">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Waktu</label>
+                            <input type="text" id="inputAkadTime" class="form-control" placeholder="08:00 - 10:00 WIB">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nama Gedung / Tempat</label>
+                        <input type="text" id="inputAkadVenue" class="form-control" placeholder="Masjid Agung Grand Ballroom">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Alamat Lengkap</label>
+                        <textarea id="inputAkadAddress" class="form-control" rows="2" placeholder="Jl. Sudirman No. 128, Menteng, Jakarta"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tautan Google Maps</label>
+                        <input type="url" id="inputAkadMap" class="form-control" placeholder="https://maps.google.com/?q=...">
+                        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                            <button type="button" class="btn-sm-action" onclick="window.app.testMapLink('akad', 'gmaps')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                <span>Uji Google Maps</span>
+                            </button>
+                            <button type="button" class="btn-sm-action" onclick="window.app.testMapLink('akad', 'waze')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.95 9.07c0 .32.02.63.06.94l.02.13a10 10 0 007.87 8.65V22a1 1 0 001.6.8l2.67-2A9.97 9.97 0 0012 22a10 10 0 0010-10A10 10 0 0012 2zm-3.5 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm7 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+                                <span>Uji Waze</span>
+                            </button>
+                            <button type="button" class="btn-sm-action" onclick="window.app.searchLocationOnMap('akad')">
+                                <span>🔍 Cari Lokasi di Maps</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: -6px; margin-bottom: 24px;">
+                        <label class="form-checkbox-label">
+                            <input type="checkbox" id="inputAkadShowEmbed" checked>
+                            <span>Tampilkan Peta Interaktif Langsung di Undangan (Embedded Google Maps)</span>
+                        </label>
+                    </div>
+
+                    <!-- RESEPSI PERNIKAHAN -->
+                    <div class="section-header-box" style="margin-top: 36px;">
+                        <h2>Acara 2: Resepsi Pernikahan</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Judul Acara 2</label>
+                        <input type="text" id="inputResepsiTitle" class="form-control" placeholder="Resepsi Pernikahan / Walimatul 'Ursy">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Hari & Tanggal</label>
+                            <input type="text" id="inputResepsiDate" class="form-control" placeholder="Sabtu, 24 Oktober 2026">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Waktu</label>
+                            <input type="text" id="inputResepsiTime" class="form-control" placeholder="11:00 - 14:00 WIB">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nama Gedung / Tempat</label>
+                        <input type="text" id="inputResepsiVenue" class="form-control" placeholder="The Ritz Emerald Ballroom">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Alamat Lengkap</label>
+                        <textarea id="inputResepsiAddress" class="form-control" rows="2" placeholder="Jl. Mega Kuningan Barat No. 1, Jakarta"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tautan Google Maps</label>
+                        <input type="url" id="inputResepsiMap" class="form-control" placeholder="https://maps.google.com/?q=...">
+                        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                            <button type="button" class="btn-sm-action" onclick="window.app.testMapLink('resepsi', 'gmaps')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                <span>Uji Google Maps</span>
+                            </button>
+                            <button type="button" class="btn-sm-action" onclick="window.app.testMapLink('resepsi', 'waze')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-9.95 9.07c0 .32.02.63.06.94l.02.13a10 10 0 007.87 8.65V22a1 1 0 001.6.8l2.67-2A9.97 9.97 0 0012 22a10 10 0 0010-10A10 10 0 0012 2zm-3.5 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm7 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+                                <span>Uji Waze</span>
+                            </button>
+                            <button type="button" class="btn-sm-action" onclick="window.app.searchLocationOnMap('resepsi')">
+                                <span>🔍 Cari Lokasi di Maps</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: -6px; margin-bottom: 24px;">
+                        <label class="form-checkbox-label">
+                            <input type="checkbox" id="inputResepsiShowEmbed" checked>
+                            <span>Tampilkan Peta Interaktif Langsung di Undangan (Embedded Google Maps)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- TAB 5: KISAH CINTA -->
+                <div class="tab-section-content" id="tab-story">
+                    <div class="section-header-box">
+                        <h2>Timeline Perjalanan Cinta</h2>
+                        <p>Ceritakan momen berharga Anda dari awal bertemu hingga lamaran.</p>
+                    </div>
+
+                    <div id="storyMilestonesList">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button type="button" class="btn-add-item" onclick="window.app.addMilestone()">
+                        + Tambah Momen Cerita Cinta
+                    </button>
+                </div>
+
+                <!-- TAB 6: GALERI & VIDEO -->
+                <div class="tab-section-content" id="tab-gallery">
+                    <div class="section-header-box">
+                        <h2>Galeri Foto Pre-Wedding</h2>
+                        <p>Foto akan tampil rapi dan dapat di-zoom saat diklik oleh tamu.</p>
+                    </div>
+
+                    <div id="galleryUrlsList">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button type="button" class="btn-add-item" onclick="window.app.addGalleryImage()" style="margin-bottom: 30px;">
+                        + Tambah Foto Galeri
+                    </button>
+
+                    <div class="section-header-box">
+                        <h2>Video Teaser Pre-Wedding</h2>
+                        <p>Masukkan tautan video YouTube (opsional).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tautan Video YouTube</label>
+                        <input type="url" id="inputVideoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
+                        <p class="form-hint">Bisa berupa link YouTube biasa atau link embed.</p>
+                    </div>
+                </div>
+
+                <!-- TAB 7: AMPLOP DIGITAL & KADO -->
+                <div class="tab-section-content" id="tab-gifts">
+                    <div class="section-header-box">
+                        <h2>Rekening Bank / Dompet Digital</h2>
+                        <p>Tamu dapat menyalin nomor rekening dengan 1 klik untuk mengirimkan angpao digital.</p>
+                    </div>
+
+                    <div id="bankAccountsList">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button type="button" class="btn-add-item" onclick="window.app.addGift()" style="margin-bottom: 32px;">
+                        + Tambah Rekening Bank / E-Wallet
+                    </button>
+
+                    <div class="section-header-box">
+                        <h2>Alamat Kirim Kado Fisik</h2>
+                        <p>Untuk tamu yang ingin mengirimkan kado fisik langsung ke rumah mempelai.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nama Penerima</label>
+                            <input type="text" id="inputPhysicalRecipient" class="form-control" placeholder="Rizky & Amanda" oninput="window.app.updatePhysicalGift()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">No. Handphone Penerima</label>
+                            <input type="text" id="inputPhysicalPhone" class="form-control" placeholder="08123456789" oninput="window.app.updatePhysicalGift()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Alamat Lengkap Pengiriman</label>
+                        <textarea id="inputPhysicalAddress" class="form-control" rows="3" placeholder="Jl. Kemang Raya Indah No. 42, Jakarta Selatan..." oninput="window.app.updatePhysicalGift()"></textarea>
+                    </div>
+                </div>
+
+                <!-- TAB 8: GENERATOR LINK & KIRIM WHATSAPP OTOMATIS -->
+                <div class="tab-section-content" id="tab-guestlinks">
+                    <div class="section-header-box">
+                        <h2>Sistem Kirim WhatsApp Otomatis</h2>
+                        <p>Otomatis generate pesan personal, tautan nama tamu, dan tombol kirim WhatsApp 1-klik yang langsung membuka chat ke nomor tujuan.</p>
+                    </div>
+
+                    <!-- Kustomisasi Template Pesan WhatsApp -->
+                    <div class="form-group" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+                        <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Format Template Pesan WhatsApp</span>
+                            <span style="font-size: 0.74rem; color: var(--text-muted); font-weight: normal;">Pilih preset atau edit bebas</span>
+                        </label>
+                        
+                        <div class="wa-template-pills">
+                            <button type="button" class="wa-pill-btn active" id="btnPresetFormal" onclick="window.app.applyWaPreset('formal')">📜 Formal / Sopan</button>
+                            <button type="button" class="wa-pill-btn" id="btnPresetIslamic" onclick="window.app.applyWaPreset('islamic')">🕌 Nuansa Islami</button>
+                            <button type="button" class="wa-pill-btn" id="btnPresetCasual" onclick="window.app.applyWaPreset('casual')">🎉 Santai / Sahabat</button>
+                        </div>
+
+                        <textarea id="waMessageTemplateTextarea" class="form-control" rows="6" placeholder="Tuliskan format pesan undangan WhatsApp..." oninput="window.app.saveWaTemplate()"></textarea>
+                        
+                        <div style="margin-top: 8px;">
+                            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Tag Otomatis (Klik untuk menyisipkan ke kursor):</span>
+                            <div class="wa-tags-container">
+                                <span class="wa-tag-chip" onclick="window.app.insertWaTag('{nama_tamu}')">{nama_tamu}</span>
+                                <span class="wa-tag-chip" onclick="window.app.insertWaTag('{link_undangan}')">{link_undangan}</span>
+                                <span class="wa-tag-chip" onclick="window.app.insertWaTag('{mempelai}')">{mempelai}</span>
+                                <span class="wa-tag-chip" onclick="window.app.insertWaTag('{tanggal_acara}')">{tanggal_acara}</span>
+                                <span class="wa-tag-chip" onclick="window.app.insertWaTag('{lokasi_acara}')">{lokasi_acara}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Tambah Tamu: Satuan & Massal -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <span>➕ Tambah Tamu Undangan</span>
+                        </div>
+
+                        <!-- Form Input Cepat Satuan -->
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 1.2;">
+                                <label class="form-label">Nama di Undangan <span class="required">*</span></label>
+                                <input type="text" id="quickGuestName" class="form-control" placeholder="Contoh: Bpk. H. Rahmat & Keluarga">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label class="form-label">Nomor WhatsApp</label>
+                                <input type="tel" id="quickGuestPhone" class="form-control" placeholder="081234567890">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-navbar" style="width: 100%; justify-content: center; margin-bottom: 16px; background: rgba(37, 211, 102, 0.12); border-color: rgba(37, 211, 102, 0.4); color: #4ade80;" onclick="window.app.addSingleGuest()">
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Tambah Tamu Satuan</span>
+                        </button>
+
+                        <!-- Pilihan Input Massal (Bulk / Import) -->
+                        <details style="border-top: 1px dashed var(--border-color); padding-top: 12px;">
+                            <summary style="font-size: 0.8rem; color: #fde68a; cursor: pointer; font-weight: 600; outline: none; margin-bottom: 10px;">
+                                📋 Atau Masukkan Banyak Sekaligus (Bulk / Paste dari Excel)
+                            </summary>
+                            <div class="form-group">
+                                <label class="form-label">Format: Nama Tamu, Nomor WhatsApp (1 baris per tamu)</label>
+                                <textarea id="guestNamesTextarea" class="form-control" rows="4" placeholder="Bapak Bambang & Keluarga, 081234567890&#10;Ibu Hj. Siti Rahma, 085712345678&#10;Sahabat Dimas Pratama, 081987654321&#10;Keluarga Besar Bpk. Handoko"></textarea>
+                                <p class="form-hint">Bisa langsung copy-paste 2 kolom (Nama dan No WA) dari Microsoft Excel atau Google Sheets.</p>
+                            </div>
+                            <button type="button" id="btnGenerateGuestLinks" class="btn-navbar btn-publish" style="width: 100%; justify-content: center;" onclick="window.app.importBulkGuests()">
+                                ⚡ Generate Semua Tamu Massal
+                            </button>
+                        </details>
+                    </div>
+
+                    <!-- Ringkasan & Toolbar Tamu -->
+                    <div class="guest-stats-bar" id="guestStatsBar">
+                        <div>
+                            <span>Total: <strong id="totalGuestsCount">0</strong></span> &nbsp;|&nbsp; 
+                            <span style="color: #4ade80;">Terkirim: <strong id="sentGuestsCount">0</strong></span> &nbsp;|&nbsp; 
+                            <span style="color: #94a3b8;">Belum: <strong id="unsentGuestsCount">0</strong></span>
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" class="btn-sm-action" onclick="window.app.copyAllGuestLinks()" title="Salin seluruh link tamu">
+                                📋 Salin Semua Link
+                            </button>
+                            <button type="button" class="btn-sm-action" style="color: #ef4444; border-color: rgba(239,68,68,0.3);" onclick="window.app.clearAllGuests()" title="Hapus semua daftar tamu">
+                                🗑️ Kosongkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Container Kartu Tamu -->
+                    <div id="generatedGuestLinksContainer">
+                        <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 20px 0;">Belum ada tamu. Tambahkan tamu satuan atau impor massal di atas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- RIGHT WORKSPACE: LIVE INTERACTIVE PREVIEW -->
+        <main class="preview-pane">
+            <!-- Toolbar -->
+            <div class="preview-toolbar">
+                <div class="preview-device-switch">
+                    <button type="button" id="btnViewMobile" class="device-btn active" title="Tampilan Smartphone">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                        <span>Mobile View</span>
+                    </button>
+                    <button type="button" id="btnViewDesktop" class="device-btn" title="Tampilan Desktop / Tablet">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Desktop View</span>
+                    </button>
+                </div>
+
+                <div class="preview-actions-group">
+                    <button type="button" id="btnRefreshPreview" class="btn-navbar" style="padding: 6px 12px; font-size: 0.8rem;" title="Muat ulang preview">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <span>Refresh</span>
+                    </button>
+                    <button type="button" id="btnPreviewNewTab" class="btn-navbar" style="padding: 6px 12px; font-size: 0.8rem;" title="Buka preview di tab browser baru">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span>Tab Baru</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Viewport Mockup Area -->
+            <div class="preview-viewport-wrapper" id="previewViewportWrapper">
+                <div class="mobile-device-frame">
+                    <!-- Realistic Phone Status Bar -->
+                    <div class="device-status-bar">
+                        <span class="status-time">09:41</span>
+                        <div class="device-dynamic-island">
+                            <span class="island-camera"></span>
+                        </div>
+                        <div class="status-icons">
+                            <svg width="12" height="10" viewBox="0 0 16 12" fill="currentColor"><path d="M1 9h2v3H1V9zm4-3h2v6H5V6zm4-3h2v9H9V3zm4-3h2v12h-2V0z"/></svg>
+                            <svg width="12" height="10" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5a11.9 11.9 0 017.5 2.7l-1.4 1.4A9.9 9.9 0 008 4.5a9.9 9.9 0 00-6.1 2.1L.5 5.2A11.9 11.9 0 018 2.5zm0 4a7.9 7.9 0 014.8 1.6l-1.4 1.4A5.9 5.9 0 008 8a5.9 5.9 0 00-3.4 1.1L3.2 8.1A7.9 7.9 0 018 6.5zm0 4a2 2 0 110 4 2 2 0 010-4z"/></svg>
+                            <svg width="16" height="9" viewBox="0 0 22 11" fill="currentColor"><rect x="1" y="1" width="18" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="3" width="12" height="5" rx="1"/><path d="M20 4v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        </div>
+                    </div>
+                    <iframe id="previewIframe" class="preview-iframe" src="invitation.html?preview=1"></iframe>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- ========================================================
+         MODAL 1: LYNK.ID LOCK SCREEN MODAL
+         ======================================================== -->
+    <div id="lockScreenModal" class="modal-backdrop">
+        <div class="modal-card" style="text-align: center;">
+            <img src="Elegant Wedding Invitation Phone Icon.png" alt="Lock App" style="width: 70px; height: 70px; border-radius: 16px; margin: 0 auto 16px; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);">
+            <h3 class="modal-title" style="justify-content: center;">Buka Akses Generator E-Wedding</h3>
+            <p class="modal-desc">
+                Aplikasi ini eksklusif untuk pembeli berlisensi di <strong>Lynk.id</strong>. Cukup masukkan email yang Anda gunakan saat bertransaksi di Lynk.id untuk membuka seluruh fitur aplikasi.
+            </p>
+
+            <!-- Notifikasi jika demo 2 menit telah habis -->
+            <div id="demoExpiredNotice" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 14px; margin-bottom: 20px; text-align: left;">
+                <div style="font-weight: 700; color: #ef4444; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Waktu Demo 2 Menit Telah Habis!
+                </div>
+                <p style="font-size: 0.82rem; color: #fca5a5; line-height: 1.45; margin: 0;">
+                    Masa uji coba gratis Anda telah berakhir. Masukkan email pembelian Lynk.id Anda di bawah atau beli akses resmi untuk melanjutkan membuat & mempublikasikan undangan pernikahan digital tanpa batasan waktu.
+                </p>
+            </div>
+
+            <form id="formVerifyEmail" style="margin-bottom: 20px;">
+                <div class="form-group" style="text-align: left;">
+                    <label class="form-label">Email Pembelian Lynk.id <span class="required">*</span></label>
+                    <input type="email" id="inputBuyerEmail" class="form-control" placeholder="nama@email.com" required autofocus>
+                </div>
+
+                <button type="submit" id="btnSubmitVerifyEmail" class="btn-navbar btn-publish" style="width: 100%; justify-content: center; padding: 13px;">
+                    🔓 Buka Akses Aplikasi
+                </button>
+            </form>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <a href="https://lynk.id/olapoal" target="_blank" class="btn-navbar" style="justify-content: center; background: rgba(255, 255, 255, 0.05);">
+                    🛒 Belum Punya Lisensi? Beli Akses di Lynk.id
+                </a>
+                <button type="button" id="btnDemoMode" class="btn-navbar" style="justify-content: center; border-style: dashed; color: #fbbf24; border-color: rgba(251, 191, 36, 0.45); background: rgba(251, 191, 36, 0.05);">
+                    ⏱️ Coba Mode Demo Gratis (2 Menit + Live Countdown)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 2: CONFIRM PUBLISH (DEDUCT 1 TOKEN)
+         ======================================================== -->
+    <div id="confirmPublishModal" class="modal-backdrop">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn modal-close-trigger">&times;</button>
+            <h3 class="modal-title">🚀 Konfirmasi Publikasi Undangan</h3>
+            <p class="modal-desc">
+                Publikasi akan membuat tautan undangan Anda online dan dapat diakses publik oleh seluruh tamu undangan.
+            </p>
+
+            <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.88rem; color: var(--text-muted);">Sisa Token Saat Ini:</span>
+                    <strong style="color: #fbbf24;" id="modalConfirmTokenCurrent">1 Token</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.88rem; color: var(--text-muted);">Biaya Publikasi:</span>
+                    <strong style="color: #ef4444;">-1 Token</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.15); padding-top: 8px;">
+                    <span style="font-size: 0.88rem; font-weight: 600;">Sisa Token Setelah Publish:</span>
+                    <strong style="color: #34d399;" id="modalConfirmTokenAfter">0 Token</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tentukan Tautan (Slug URL Undangan)</label>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">/i/</span>
+                    <input type="text" id="inputPublishSlug" class="form-control" placeholder="rizky-amanda">
+                </div>
+                <p class="form-hint">Hanya huruf, angka, dan strip (-). Contoh: <code>rizky-amanda</code></p>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="button" class="btn-navbar modal-close-trigger" style="flex: 1; justify-content: center;">
+                    Batal
+                </button>
+                <button type="button" id="btnConfirmPublishSubmit" class="btn-navbar btn-publish" style="flex: 2; justify-content: center;">
+                    Ya, Publish Sekarang (-1 Token)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 3: TOKEN TOP-UP (VIA TRAKTEER & AUTO VERIFICATION)
+         ======================================================== -->
+    <div id="topupTokenModal" class="modal-backdrop">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn modal-close-trigger">&times;</button>
+            <h3 class="modal-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/><circle cx="12" cy="12" r="7" stroke="#FDE68A" stroke-width="1" stroke-dasharray="2 2"/><text x="12" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11" fill="#78350F" text-anchor="middle">T</text></svg>
+                Top-Up Token Publikasi Undangan
+            </h3>
+            <p class="modal-desc">
+                1 Token berlaku untuk 1 undangan online aktif selamanya tanpa batas tamu. Top-up dapat dilakukan secara mudah via <strong>Trakteer</strong> (mendukung QRIS, GoPay, OVO, Dana, ShopeePay, Transfer Bank).
+            </p>
+
+            <div id="topupModalNotice" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 12px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+
+            <!-- Paket Pilihan -->
+            <div class="topup-packages-grid">
+                <!-- Paket 1 Token -->
+                <div class="package-card" onclick="window.open('https://trakteer.id', '_blank')">
+                    <div class="package-info">
+                        <h4>🥤 Paket 1 Token Publikasi</h4>
+                        <p>1 Cendol Trakteer &bull; Cukup untuk 1 undangan aktif</p>
+                    </div>
+                    <div class="package-price">Rp 15.000</div>
+                </div>
+
+                <!-- Paket 3 Token -->
+                <div class="package-card highlight" onclick="window.open('https://trakteer.id', '_blank')">
+                    <div class="package-info">
+                        <h4>🥤🥤🥤 Paket 3 Token (Terpopuler)</h4>
+                        <p>3 Cendol Trakteer &bull; Untuk 3 undangan berbeda</p>
+                    </div>
+                    <div class="package-price">Rp 35.000</div>
+                </div>
+
+                <!-- Paket 5 Token -->
+                <div class="package-card" onclick="window.open('https://trakteer.id', '_blank')">
+                    <div class="package-info">
+                        <h4>⭐ Paket 5 Token (Hemat Spesial)</h4>
+                        <p>5 Cendol Trakteer &bull; Sangat cocok untuk vendor / EO</p>
+                    </div>
+                    <div class="package-price">Rp 50.000</div>
+                </div>
+            </div>
+
+            <!-- Petunjuk Trakteer -->
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px dashed var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 20px;">
+                <h5 style="color: #fbbf24; font-size: 0.85rem; margin-bottom: 4px;">⚠️ Cara Otomatisasi Token:</h5>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    Saat membayar di Trakteer, <strong>tuliskan email Anda (<span id="topupUserEmailDisplay">email Anda</span>)</strong> pada kolom Pesan/Catatan Supporter. Sistem webhook kami akan langsung mendeteksi dan menambahkan token otomatis!
+                </p>
+            </div>
+
+            <a href="https://trakteer.id" target="_blank" class="btn-trakteer-action">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                <span>Buka Halaman Trakteer Sekarang</span>
+            </a>
+
+            <!-- Verifikasi Cepat di Aplikasi -->
+            <div class="verify-check-box">
+                <h5 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 6px;">Sudah bayar di Trakteer?</h5>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Jika token belum langsung bertambah, masukkan Kode Transaksi / Order ID Trakteer (opsional) atau klik tombol di bawah:</p>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="inputTrakteerOrderId" class="form-control" placeholder="Kode Transaksi (Contoh: TRK-12345)" style="font-size: 0.85rem; padding: 8px 12px;">
+                    <button type="button" id="btnCheckTrakteer" class="btn-navbar btn-publish" style="white-space: nowrap; font-size: 0.8rem; padding: 8px 14px;">
+                        Cek Status Token
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 4: PUBLISH SUCCESS MODAL
+         ======================================================== -->
+    <div id="publishSuccessModal" class="modal-backdrop">
+        <div class="modal-card" style="text-align: center;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">
+                ✓
+            </div>
+            <h3 class="modal-title" style="justify-content: center;">Selamat! Undangan Anda Online!</h3>
+            <p class="modal-desc">
+                Undangan pernikahan digital Anda telah berhasil dipublikasikan dan siap dibagikan ke para tamu terkasih.
+            </p>
+
+            <div class="form-group" style="text-align: left;">
+                <label class="form-label">Tautan Publik Undangan:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="publishedUrlInput" class="form-control" readonly style="background: rgba(0,0,0,0.3); font-weight: 600; color: #34d399;">
+                    <button type="button" class="btn-navbar" onclick="navigator.clipboard.writeText(document.getElementById('publishedUrlInput').value); window.app.showToast('Tautan disalin ke clipboard!');" style="white-space: nowrap;">
+                        📋 Salin
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 24px;">
+                <a href="#" id="btnOpenPublishedUrl" target="_blank" class="btn-navbar btn-publish" style="flex: 1; justify-content: center;">
+                    🌐 Buka Undangan Online
+                </a>
+                <button type="button" class="btn-navbar modal-close-trigger" style="flex: 1; justify-content: center;">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="assets/js/presets.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

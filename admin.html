@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard &bull; E-Wedding Invitation Studio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Elegant Wedding Invitation Phone Icon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .admin-table-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+        .admin-table th {
+            background: var(--bg-main);
+            padding: 14px 18px;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .admin-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+        .admin-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .btn-table-action {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-table-action:hover {
+            filter: brightness(1.2);
+        }
+        .stat-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+        }
+        .stat-card-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .stat-card-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body style="background: var(--bg-main);">
+
+    <!-- LOGIN SECTION -->
+    <div id="adminLoginSection" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="modal-card" style="max-width: 420px; text-align: center;">
+            <img src="Elegant Wedding Invitation Phone Icon.png" alt="Admin Icon" style="width: 64px; height: 64px; border-radius: 14px; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);">
+            <h2 class="modal-title" style="justify-content: center;">Super Admin Login</h2>
+            <p class="modal-desc">Masuk ke panel kontrol lisensi, token, dan publikasi undangan.</p>
+
+            <div id="adminLoginError" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px;"></div>
+
+            <form id="adminLoginForm">
+                <div class="form-group" style="text-align: left;">
+                    <label class="form-label">Password Admin</label>
+                    <input type="password" id="inputAdminPassword" class="form-control" placeholder="Default: admin12345" required autofocus>
+                </div>
+                <button type="submit" class="btn-navbar btn-publish" style="width: 100%; justify-content: center; padding: 12px;">
+                    Masuk ke Dashboard
+                </button>
+            </form>
+            <div style="margin-top: 18px;">
+                <a href="index.html" style="font-size: 0.82rem; color: var(--text-muted); text-decoration: none;">&larr; Kembali ke Aplikasi Utama</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD SECTION -->
+    <div id="adminDashboardSection" style="display: none;">
+        <!-- Admin Navbar -->
+        <header class="top-navbar">
+            <div class="brand-section">
+                <img src="Elegant Wedding Invitation Phone Icon.png" alt="Logo" class="brand-logo">
+                <div class="brand-title-group">
+                    <h1>Super Admin Panel &bull; E-Wedding</h1>
+                    <p>Manajemen Lisensi Lynk.id & Saldo Token Trakteer</p>
+                </div>
+            </div>
+
+            <div class="navbar-actions">
+                <button type="button" class="btn-navbar" onclick="document.getElementById('changePassModal').classList.add('active')">
+                    🔑 Ganti Password
+                </button>
+                <a href="index.html" class="btn-navbar" target="_blank">
+                    🌐 Buka Aplikasi
+                </a>
+                <button type="button" id="btnAdminLogout" class="btn-navbar" style="color: #f87171; border-color: rgba(239, 68, 68, 0.3);">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Admin Content -->
+        <main style="max-width: 1200px; margin: 30px auto; padding: 0 24px;">
+
+            <!-- Stats Overview -->
+            <div class="stat-card-grid">
+                <div class="stat-card">
+                    <div class="stat-card-title">Total Pembeli / Pengguna Lisensi</div>
+                    <div class="stat-card-value" id="statTotalUsers" style="color: #38bdf8;">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-title">Total Saldo Token Beredar</div>
+                    <div class="stat-card-value" id="statTotalTokens" style="color: #fbbf24;">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-title">Total Undangan Dipublish Online</div>
+                    <div class="stat-card-value" id="statTotalPublished" style="color: #34d399;">0</div>
+                </div>
+            </div>
+
+            <!-- Header Table Actions -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #fff;">Daftar Pengguna & Saldo Token</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Kelola akses pengguna, tambah atau kurangi saldo token publish langsung dengan 1-klik.</p>
+                </div>
+                <button type="button" class="btn-navbar btn-publish" onclick="document.getElementById('addBuyerModal').classList.add('active')">
+                    + Tambah Pengguna Manual
+                </button>
+            </div>
+
+            <!-- Table of Buyers -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">#</th>
+                            <th>Nama & Email Pembeli</th>
+                            <th>Saldo Token</th>
+                            <th>Undangan Terbit</th>
+                            <th>Tanggal Terdaftar</th>
+                            <th style="width: 220px;">Aksi Token</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buyersTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Published Invitations Section -->
+            <div style="margin-top: 40px; margin-bottom: 20px;">
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: #fff;">Undangan yang Sedang Online</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Daftar seluruh tautan undangan pernikahan digital yang telah dipublikasikan.</p>
+            </div>
+
+            <div id="invitationsListContainer" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Populated by JS -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL 1: TAMBAH BUYER MANUAL -->
+    <div id="addBuyerModal" class="modal-backdrop">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn" onclick="document.getElementById('addBuyerModal').classList.remove('active')">&times;</button>
+            <h3 class="modal-title">+ Tambah Pengguna Lisensi Baru</h3>
+            <p class="modal-desc">Daftarkan email pengguna secara manual jika bertransaksi di luar Lynk.id atau untuk akun VIP.</p>
+
+            <form id="formAddBuyerModal">
+                <div class="form-group">
+                    <label class="form-label">Email Pengguna <span class="required">*</span></label>
+                    <input type="email" id="inputAddBuyerEmail" class="form-control" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Pengguna</label>
+                    <input type="text" id="inputAddBuyerName" class="form-control" placeholder="Nama Calon Pengantin / Klien">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Jumlah Saldo Token Awal</label>
+                    <input type="number" id="inputAddBuyerTokens" class="form-control" value="1" min="1" max="999">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 24px;">
+                    <button type="button" class="btn-navbar" style="flex: 1; justify-content: center;" onclick="document.getElementById('addBuyerModal').classList.remove('active')">Batal</button>
+                    <button type="submit" class="btn-navbar btn-publish" style="flex: 2; justify-content: center;">Simpan Pengguna</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: GANTI PASSWORD ADMIN -->
+    <div id="changePassModal" class="modal-backdrop">
+        <div class="modal-card">
+            <button type="button" class="modal-close-btn" onclick="document.getElementById('changePassModal').classList.remove('active')">&times;</button>
+            <h3 class="modal-title">🔑 Ganti Password Admin</h3>
+            <p class="modal-desc">Perbarui password master untuk mengakses panel ini.</p>
+
+            <form id="formChangePassword">
+                <div class="form-group">
+                    <label class="form-label">Password Baru (Minimal 5 karakter)</label>
+                    <input type="password" id="inputNewAdminPassword" class="form-control" placeholder="Masukkan password baru" required minlength="5">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 24px;">
+                    <button type="button" class="btn-navbar" style="flex: 1; justify-content: center;" onclick="document.getElementById('changePassModal').classList.remove('active')">Batal</button>
+                    <button type="submit" class="btn-navbar btn-publish" style="flex: 2; justify-content: center;">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>

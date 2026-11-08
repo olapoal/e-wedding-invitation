@@ -1,0 +1,22 @@
+{
+  "name": "aplikasi-e-wedding-invitation",
+  "version": "1.0.0",
+  "description": "Generator Electronic Wedding Invitation Tercanggih dengan Sistem Lisensi Lynk.id & Token Top-Up Trakteer",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.1"
+  },
+  "keywords": [
+    "wedding-invitation",
+    "undangan-digital",
+    "generator",
+    "lynk.id",
+    "trakteer",
+    "token"
+  ],
+  "author": "Olapoal Art Gallery",
+  "license": "ISC"
+}
