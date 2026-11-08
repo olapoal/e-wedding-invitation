@@ -193,7 +193,7 @@ class WeddingApp {
                 this.hideLockScreen();
                 this.showToast(`Selamat datang, ${data.name}! Akses aplikasi terbuka.`);
             } else {
-                alert(data.message || 'Email belum terdaftar di Lynk.id. Pastikan Anda telah menyelesaikan pembayaran.');
+                alert(data.message || 'Email belum terdaftar di Lynk.id. Pastikan Anda telah menyelesaikan pembayaran di https://lynk.id/olapoal.');
             }
         } catch (err) {
             console.warn("Verify error, fallback:", err);
@@ -726,7 +726,7 @@ class WeddingApp {
 
         // Cek sisa token
         if (this.currentUser.tokens < 1) {
-            this.openTopupModal('Token Publikasi Anda Habis (0 Token). Silakan top-up terlebih dahulu untuk mempublikasikan undangan ini.');
+            this.openTopupModal('Token Publikasi Anda Habis (0 Token). Silakan beli lisensi di Lynk.id (https://lynk.id/olapoal) atau top-up via Trakteer.');
             return;
         }
 

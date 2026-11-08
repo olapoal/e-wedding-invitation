@@ -127,7 +127,7 @@ exports.handler = async function(event, context) {
             headers: corsHeaders,
             body: JSON.stringify({
                 valid: false,
-                message: `Email '${email}' belum terdaftar. Pastikan Anda telah membeli akses di Lynk.id dengan email ini.`
+                message: `Email '${email}' belum terdaftar. Pastikan Anda telah membeli akses di Lynk.id (https://lynk.id/olapoal) dengan email ini.`
             })
         };
 
