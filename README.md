@@ -194,16 +194,23 @@ G:\My Drive\Personal\Project\Aplikasi E-Wedding Invitation/
    - Tarik folder ini ke Netlify Dashboard atau hubungkan via GitHub / Netlify CLI (`netlify deploy --prod`).
 2. **Pengaturan Environment Variables di Netlify**:
    Buka menu **Site Configuration** &gt; **Environment variables**:
+   - `SUPABASE_URL` : `https://plxonjsspoagxxtolyjj.supabase.co`
+   - `SUPABASE_KEY` : *Salin `anon public` key atau `service_role` key dari Supabase Dashboard &gt; Project Settings &gt; API*
    - `ADMIN_EMAILS` : `olapoal.artgallery@gmail.com,admin@wedding.com`
    - `ADMIN_PASSWORD` : `admin12345` (atau ganti dengan password rahasia Anda)
    - `TRAKTEER_API_KEY` : *(Opsional) Kunci API dari dashboard Trakteer Anda*
-   - `SUPABASE_URL` / `SUPABASE_KEY` : *(Opsional jika ingin dual backup dengan Supabase)*
 
-3. **Konfigurasi Webhook di Dashboard Lynk.id**:
+3. **Inisialisasi Database di Supabase (1-Klik)**:
+   - Buka project Supabase Anda: [https://plxonjsspoagxxtolyjj.supabase.co](https://plxonjsspoagxxtolyjj.supabase.co)
+   - Buka menu **SQL Editor** di sidebar kiri.
+   - Buka file [**`supabase-schema.sql`**](file:///G:/My%20Drive/Personal/Project/Aplikasi%20E-Wedding%20Invitation/supabase-schema.sql), copy seluruh isinya, paste ke SQL Editor, lalu klik **Run**.
+   - Seluruh tabel (`wedding_buyers`, `wedding_invitations`, `wedding_rsvps`, `wedding_transactions`) dan kebijakan keamanan RLS otomatis terpasang!
+
+4. **Konfigurasi Webhook di Dashboard Lynk.id**:
    - URL Webhook: `https://<nama-aplikasi>.netlify.app/.netlify/functions/lynk-webhook`
    - Event: `Payment Success` / `Order Paid`
 
-4. **Konfigurasi Webhook di Dashboard Trakteer**:
+5. **Konfigurasi Webhook di Dashboard Trakteer**:
    - Buka menu **Integrasi** / **Webhook** di Trakteer Creator.
    - URL Webhook: `https://<nama-aplikasi>.netlify.app/.netlify/functions/trakteer-webhook`
    - Event: `Tip / Support`

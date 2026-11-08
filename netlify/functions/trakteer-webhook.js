@@ -148,6 +148,53 @@ exports.handler = async function(event, context) {
             console.error("Netlify Blobs error in trakteer-webhook:", blobsErr.message);
         }
 
+        // Simpan / Update ke Supabase Database
+        const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            try {
+                const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                // Upsert buyer
+                await fetch(`${cleanUrl}/rest/v1/wedding_buyers`, {
+                    method: "POST",
+                    headers: {
+                        "apikey": supabaseKey,
+                        "Authorization": `Bearer ${supabaseKey}`,
+                        "Content-Type": "application/json",
+                        "Prefer": "resolution=merge-duplicates"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        name: supporterName,
+                        tokens: finalTokens,
+                        source: "trakteer",
+                        updated_at: new Date().toISOString()
+                    })
+                });
+
+                // Catat transaksi
+                await fetch(`${cleanUrl}/rest/v1/wedding_transactions`, {
+                    method: "POST",
+                    headers: {
+                        "apikey": supabaseKey,
+                        "Authorization": `Bearer ${supabaseKey}`,
+                        "Content-Type": "application/json",
+                        "Prefer": "resolution=merge-duplicates"
+                    },
+                    body: JSON.stringify({
+                        order_id: orderId,
+                        email: email,
+                        supporter_name: supporterName,
+                        platform: "trakteer",
+                        tokens_credited: addedTokens,
+                        created_at: new Date().toISOString()
+                    })
+                });
+            } catch (supaErr) {
+                console.warn("Supabase trakteer update notice:", supaErr.message);
+            }
+        }
+
         return {
             statusCode: 200,
             headers: corsHeaders,

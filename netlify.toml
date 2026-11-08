@@ -2,6 +2,9 @@
   publish = "."
   functions = "netlify/functions"
 
+[build.environment]
+  SUPABASE_URL = "https://plxonjsspoagxxtolyjj.supabase.co"
+
 [functions]
   node_bundler = "esbuild"
   included_files = ["netlify/functions/**"]

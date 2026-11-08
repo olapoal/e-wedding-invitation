@@ -36,6 +36,38 @@ exports.handler = async function(event, context) {
                 console.warn("Get rsvp error:", e.message);
             }
 
+            // Fallback / Dual check ke Supabase
+            if (wishesList.length === 0) {
+                const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+                const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+                if (supabaseUrl && supabaseKey) {
+                    try {
+                        const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                        const res = await fetch(`${cleanUrl}/rest/v1/wedding_rsvps?slug=eq.${encodeURIComponent(slug)}&order=created_at.desc&limit=200`, {
+                            headers: {
+                                "apikey": supabaseKey,
+                                "Authorization": `Bearer ${supabaseKey}`
+                            }
+                        });
+                        if (res.ok) {
+                            const rows = await res.json();
+                            if (rows && rows.length > 0) {
+                                wishesList = rows.map(r => ({
+                                    id: `WISH-${r.id}`,
+                                    name: r.guest_name,
+                                    attendance: r.attendance,
+                                    guestsCount: r.guests_count,
+                                    message: r.message,
+                                    createdAt: r.created_at
+                                }));
+                            }
+                        }
+                    } catch (supaErr) {
+                        console.warn("Supabase get rsvp notice:", supaErr.message);
+                    }
+                }
+            }
+
             return {
                 statusCode: 200,
                 headers: corsHeaders,
@@ -80,6 +112,33 @@ exports.handler = async function(event, context) {
                 await rsvpStore.setJSON(slug, { slug, wishes: wishesList, lastUpdated: new Date().toISOString() });
             } catch (e) {
                 console.warn("Save RSVP error:", e.message);
+            }
+
+            // Simpan juga ke Supabase Database
+            const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+            const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+            if (supabaseUrl && supabaseKey) {
+                try {
+                    const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                    await fetch(`${cleanUrl}/rest/v1/wedding_rsvps`, {
+                        method: "POST",
+                        headers: {
+                            "apikey": supabaseKey,
+                            "Authorization": `Bearer ${supabaseKey}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            slug: slug,
+                            guest_name: name,
+                            attendance: attendance,
+                            guests_count: guestsCount,
+                            message: message,
+                            created_at: newWish.createdAt
+                        })
+                    });
+                } catch (supaErr) {
+                    console.warn("Supabase RSVP save notice:", supaErr.message);
+                }
             }
 
             return {

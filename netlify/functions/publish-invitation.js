@@ -138,6 +138,49 @@ exports.handler = async function(event, context) {
             remainingTokens = 0;
         }
 
+        // Simpan / Backup ke Supabase Database
+        const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            try {
+                const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                // Simpan data undangan
+                await fetch(`${cleanUrl}/rest/v1/wedding_invitations`, {
+                    method: "POST",
+                    headers: {
+                        "apikey": supabaseKey,
+                        "Authorization": `Bearer ${supabaseKey}`,
+                        "Content-Type": "application/json",
+                        "Prefer": "resolution=merge-duplicates"
+                    },
+                    body: JSON.stringify({
+                        slug: slug,
+                        owner_email: email,
+                        data: invitationData,
+                        updated_at: new Date().toISOString()
+                    })
+                });
+
+                // Update token user di Supabase jika bukan demo
+                if (email && email !== "demo.pengantin@gmail.com") {
+                    await fetch(`${cleanUrl}/rest/v1/wedding_buyers?email=eq.${encodeURIComponent(email)}`, {
+                        method: "PATCH",
+                        headers: {
+                            "apikey": supabaseKey,
+                            "Authorization": `Bearer ${supabaseKey}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            tokens: remainingTokens,
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                }
+            } catch (supaErr) {
+                console.warn("Supabase publish notice:", supaErr.message);
+            }
+        }
+
         return {
             statusCode: 200,
             headers: corsHeaders,
