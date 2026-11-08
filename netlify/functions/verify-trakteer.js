@@ -58,6 +58,29 @@ exports.handler = async function(event, context) {
             }
         }
 
+        // Cek fallback ke Supabase jika data belum ada di Blobs
+        if (!buyerData) {
+            const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+            const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_publishable_edaVnzcw7U4xi2xUYz_nkQ_4mCMgFRJ";
+            if (supabaseUrl && supabaseKey) {
+                try {
+                    const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                    const res = await fetch(`${cleanUrl}/rest/v1/wedding_buyers?email=eq.${encodeURIComponent(email)}&select=*`, {
+                        headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                    });
+                    if (res.ok) {
+                        const rows = await res.json();
+                        if (rows && rows.length > 0) {
+                            buyerData = rows[0];
+                            currentTokens = typeof rows[0].tokens === "number" ? rows[0].tokens : 0;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Supabase check error in verify-trakteer:", e.message);
+                }
+            }
+        }
+
         // 2. Jika user menyertakan Order ID Trakteer untuk klaim:
         if (orderIdInput && unclaimedStore && buyersStore) {
             const pendingTx = await unclaimedStore.get(orderIdInput, { type: "json" });

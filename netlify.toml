@@ -4,6 +4,7 @@
 
 [build.environment]
   SUPABASE_URL = "https://plxonjsspoagxxtolyjj.supabase.co"
+  SUPABASE_KEY = "sb_publishable_edaVnzcw7U4xi2xUYz_nkQ_4mCMgFRJ"
 
 [functions]
   node_bundler = "esbuild"

@@ -103,6 +103,28 @@ exports.handler = async function(event, context) {
                 }
             }
 
+            // Jika kosong di Blobs, ambil dari Supabase
+            if (buyers.length === 0) {
+                const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+                const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_publishable_edaVnzcw7U4xi2xUYz_nkQ_4mCMgFRJ";
+                if (supabaseUrl && supabaseKey) {
+                    try {
+                        const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                        const res = await fetch(`${cleanUrl}/rest/v1/wedding_buyers?select=*`, {
+                            headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                        });
+                        if (res.ok) {
+                            const rows = await res.json();
+                            if (rows && rows.length > 0) {
+                                buyers = rows;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Supabase list error in admin:", e.message);
+                    }
+                }
+            }
+
             // Tambahkan admin default jika belum ada di list
             const adminEmail = "olapoal.artgallery@gmail.com";
             if (!buyers.some(b => b.email === adminEmail)) {
@@ -157,6 +179,31 @@ exports.handler = async function(event, context) {
             buyer.updated_at = new Date().toISOString();
 
             await buyersStore.setJSON(email, buyer);
+
+            // Update juga di Supabase Database
+            const supabaseUrl = process.env.SUPABASE_URL || "https://plxonjsspoagxxtolyjj.supabase.co";
+            const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_publishable_edaVnzcw7U4xi2xUYz_nkQ_4mCMgFRJ";
+            if (supabaseUrl && supabaseKey) {
+                try {
+                    const cleanUrl = supabaseUrl.replace(/\/$/, "");
+                    await fetch(`${cleanUrl}/rest/v1/wedding_buyers`, {
+                        method: "POST",
+                        headers: {
+                            "apikey": supabaseKey,
+                            "Authorization": `Bearer ${supabaseKey}`,
+                            "Content-Type": "application/json",
+                            "Prefer": "resolution=merge-duplicates"
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            tokens: newTokens,
+                            updated_at: new Date().toISOString()
+                        })
+                    });
+                } catch (e) {
+                    console.warn("Supabase update error in admin:", e.message);
+                }
+            }
 
             return {
                 statusCode: 200,
