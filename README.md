@@ -195,7 +195,7 @@ G:\My Drive\Personal\Project\Aplikasi E-Wedding Invitation/
 2. **Pengaturan Environment Variables di Netlify**:
    Buka menu **Site Configuration** &gt; **Environment variables**:
    - `SUPABASE_URL` : `https://plxonjsspoagxxtolyjj.supabase.co`
-   - `SUPABASE_KEY` : *Salin `anon public` key atau `service_role` key dari Supabase Dashboard &gt; Project Settings &gt; API*
+   - `SUPABASE_KEY` : `sb_publishable_edaVnzcw7U4xi2xUYz_nkQ_4mCMgFRJ` (atau `service_role` key jika diperlukan)
    - `ADMIN_EMAILS` : `olapoal.artgallery@gmail.com,admin@wedding.com`
    - `ADMIN_PASSWORD` : `admin12345` (atau ganti dengan password rahasia Anda)
    - `TRAKTEER_API_KEY` : *(Opsional) Kunci API dari dashboard Trakteer Anda*
